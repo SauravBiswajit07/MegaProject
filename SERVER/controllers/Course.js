@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-const Tag = require("../models/tags");
+const Category = require("../models/Category");
 const User = require("../models/User");
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
@@ -7,12 +7,14 @@ const {uploadImageToCloudinary} = require("../utils/imageUploader");
 exports.createCourse = async (req,res)=>{
     try{
         // fetch data
-        const {courseName, courseDescription , whatYouWillLearn, price, tag} = req.body;
+        const {courseName, courseDescription , whatYouWillLearn, price, tag:_tag,category} = req.body;
         // fetch thumbnail
         const thumbnail = req.files.thumbnailImage; 
+        // Convert the tag and instructions from stringified Array to Array
+        const tag = JSON.parse(_tag)
 
         // validation 
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag || !thumbnail){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !tag.length || !thumbnail || !category){
             return res.status(400).json({
                 success:false,
                 message:"All Fields are Required",
@@ -32,11 +34,11 @@ exports.createCourse = async (req,res)=>{
         }
 
         // check given tag is valid or not 
-        const tagDetails = await Tag.findById(tag); // here findById bcz in Tag model we created tag as ObjectId..so here fetched tag will be a id
-        if(!tagDetails){
+        const categoryDetails = await Category.findById(category); // here findById bcz in CAtegory model we created category as ObjectId..so here fetched category will be a id
+        if(!categoryDetails){
             return res.status(404).json({
                 success:false,
-                message:"Tag Details Details not Found",
+                message:"Category Details Details not Found",
             }); 
         }
 
@@ -51,7 +53,8 @@ exports.createCourse = async (req,res)=>{
             instructor:instructorDetails._id,
             whatYouWillLearn:whatYouWillLearn,
             price,
-            tag:tagDetails._id,
+            tag,
+            category: categoryDetails._id,
             thumbnail:thumbnailImage.secure_url, //uploadImageToCloudinary in thisin rsponse it wil send objects having a parametr secure_url
 
         });
@@ -66,7 +69,17 @@ exports.createCourse = async (req,res)=>{
             },
             {new:true},
         );
-        // update tag ka schema
+        // update category ka schema
+        const categoryDetails2 = await Category.findByIdAndUpdate(
+            { _id: category },
+            {
+              $push: {
+                courses: newCourse._id,
+              },
+            },
+            { new: true }
+        )
+        console.log("HEREEEEEEEE", categoryDetails2);
 
         return res.status(200).json({
             success:true,

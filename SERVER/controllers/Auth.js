@@ -67,7 +67,7 @@ exports.sendOTP = async (req,res)=> {
 //signUp
 exports.signUp= async(req,res)=>{
     try{
-            // data fetch from req body 
+        // data fetch from req body 
         const {firstName,lastName,email,password,confirmPassword,
             accountType,contactNumber,otp}= req.body;
         
@@ -105,7 +105,7 @@ exports.signUp= async(req,res)=>{
                 success:false,
                 message:"OTP not Found"
             })
-        }else if(otp !== recentOtp.otp){
+        }else if(otp !== recentOtp[0].otp){ //recentOtp re OTP ra model thiba email,otp,createdAt so amaku khali recentOtp ra otp darkar hence recentOtp.otp
             return res.status(400).json({
                 success:false,
                 message:'OTP is not recent'
@@ -255,7 +255,7 @@ exports.changePassword = async (req, res) => {
                 `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
             )
             )
-            console.log("Email sent successfully:", emailResponse.response)
+            console.log("Email sent successfully: ", emailResponse.response)
         } catch (error) {
             // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
             console.error("Error occurred while sending email:", error)

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 
-const tagsSchema = new mongoose.Schema({
+const categorySchema = new mongoose.Schema({
     
     name:{
         type:String,
@@ -12,13 +12,13 @@ const tagsSchema = new mongoose.Schema({
         trim:true,
         // white spaces will be removed from both sides of the string in trim:true 
     },
-    course:{
+    courses:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Course"
-    }
+    }]
 
 });
 
-module.exports= mongoose.model("Tag",tagsSchema)
+module.exports= mongoose.model("Category",categorySchema)
 
 
