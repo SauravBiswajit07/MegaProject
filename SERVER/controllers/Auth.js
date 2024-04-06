@@ -4,6 +4,7 @@ const OTP = require ("../models/OTP")
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Profile = require("../models/Profile")
 require("dotenv").config();
 
 // sendOtp in case of signUP
