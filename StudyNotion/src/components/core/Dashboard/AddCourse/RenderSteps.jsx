@@ -4,9 +4,13 @@ import { useSelector } from "react-redux"
 import CourseBuilderForm from "./CourseBuilder/CourseBuilderForm"
 import CourseInformationForm from "./CourseInformation/CourseInformationForm"
 import PublishCourse from "./PublishCourse"
+// import { BsChevronCompactLeft } from "react-icons/bs"
 
 export default function RenderSteps() {
-  const { step } = useSelector((state) => state.course)
+  console.log("before fetching steps ");
+  const { course,step } = useSelector((state) => state.course)
+  console.log("after fetching course ",course);
+  console.log("after fetching steps ",step);
 
   const steps = [
     {
@@ -47,6 +51,7 @@ export default function RenderSteps() {
               </button>
               
             </div>
+            {/* dashes are added */}
             {item.id !== steps.length && (
               <>
                 <div

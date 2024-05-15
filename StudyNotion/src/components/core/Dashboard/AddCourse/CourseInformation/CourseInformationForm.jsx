@@ -35,9 +35,12 @@ export default function CourseInformationForm() {
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true)
-      const categories = await fetchCourseCategories()
-      if (categories.length > 0) {
-        // console.log("categories", categories)
+      console.log(" before categories called")
+
+      const categories = await fetchCourseCategories();
+      console.log(" after categories", categories)
+      if (categories?.length > 0) {
+        console.log("categories", categories)
         setCourseCategories(categories)
       }
       setLoading(false)
@@ -70,7 +73,7 @@ export default function CourseInformationForm() {
       currentValues.courseBenefits !== course.whatYouWillLearn ||
       currentValues.courseCategory._id !== course.category._id ||
       currentValues.courseRequirements.toString() !==
-        course.instructions.toString() ||
+         course.instructions.toString() ||
       currentValues.courseImage !== course.thumbnail
     ) {
       return true
@@ -125,6 +128,7 @@ export default function CourseInformationForm() {
         // console.log("Edit Form data: ", formData)
         setLoading(true)
         const result = await editCourseDetails(formData, token)
+        console.log("inside course information course creation ",result);
         setLoading(false)
         if (result) {
           dispatch(setStep(2))
@@ -135,7 +139,8 @@ export default function CourseInformationForm() {
       }
       return
     }
-
+    
+    //if not for edit and for first time creating a new course
     const formData = new FormData()
     formData.append("courseName", data.courseTitle)
     formData.append("courseDescription", data.courseShortDesc)
@@ -270,7 +275,7 @@ export default function CourseInformationForm() {
       <div className="flex flex-col space-y-2">
         <label className="text-sm text-richblack-5" htmlFor="courseBenefits">
           Benefits of the course <sup className="text-pink-200">*</sup>
-        </label>
+        </label>[]
         <textarea
           id="courseBenefits"
           placeholder="Enter benefits of the course"

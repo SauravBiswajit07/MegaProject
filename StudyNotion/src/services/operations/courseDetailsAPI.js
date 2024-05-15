@@ -69,12 +69,15 @@ export const fetchCourseDetails = async (courseId) => {
 export const fetchCourseCategories = async () => {
   let result = []
   try {
+    console.log(" before in operation course details api COURSE_CATEGORIES_API API RESPONSE............")
+
     const response = await apiConnector("GET", COURSE_CATEGORIES_API)
-    console.log("COURSE_CATEGORIES_API API RESPONSE............", response)
+    console.log("after in operation course details api COURSE_CATEGORIES_API API RESPONSE............", response)
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories")
     }
-    result = response?.data?.data
+    result = response?.data?.data;
+    console.log("result of categories fetched ",result);
   } catch (error) {
     console.log("COURSE_CATEGORY_API API ERROR............", error)
     toast.error(error.message)
@@ -87,6 +90,8 @@ export const addCourseDetails = async (data, token) => {
   let result = null
   const toastId = toast.loading("Loading...")
   try {
+    console.log(" before CREATE COURSE API RESPONSE............")
+
     const response = await apiConnector("POST", CREATE_COURSE_API, data, {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
@@ -264,6 +269,8 @@ export const fetchInstructorCourses = async (token) => {
   let result = []
   const toastId = toast.loading("Loading...")
   try {
+    console.log(" before INSTRUCTOR COURSES API RESPONSE............")
+
     const response = await apiConnector(
       "GET",
       GET_ALL_INSTRUCTOR_COURSES_API,
@@ -272,7 +279,7 @@ export const fetchInstructorCourses = async (token) => {
         Authorization: `Bearer ${token}`,
       }
     )
-    console.log("INSTRUCTOR COURSES API RESPONSE............", response)
+    console.log("after INSTRUCTOR COURSES API RESPONSE............", response)
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Instructor Courses")
     }

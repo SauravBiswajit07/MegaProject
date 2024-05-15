@@ -19,14 +19,16 @@ export function getUserDetails(token, navigate) {
       const response = await apiConnector("GET", GET_USER_DETAILS_API, null, {
         Authorization: `Bearer ${token}`,
       })
-      console.log("GET_USER_DETAILS API RESPONSE............", response)
+      console.log("image of response in profile api ",response.data.data.image) 
+      //ethi asuni image user ra dicebar ru why
+      console.log(" after in profile api GET_USER_DETAILS API RESPONSE............", response)
 
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
       const userImage = response.data.data.image
         ? response.data.data.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.data.firstName} ${response.data.data.lastName}`
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.data.firstName}${response.data.data.lastName}`
       dispatch(setUser({ ...response.data.data, image: userImage }))
     } catch (error) {
       dispatch(logout(navigate))
@@ -38,10 +40,14 @@ export function getUserDetails(token, navigate) {
   }
 }
 
-export async function getUserEnrolledCourses(token) {
+ export async function getUserEnrolledCourses(token) {
   const toastId = toast.loading("Loading...")
   let result = []
   try {
+
+    console.log(
+      " Before in operation profile API GET_USER_ENROLLED_COURSES_API API RESPONSE............",
+    )
     const response = await apiConnector(
       "GET",
       GET_USER_ENROLLED_COURSES_API,
@@ -50,10 +56,10 @@ export async function getUserEnrolledCourses(token) {
         Authorization: `Bearer ${token}`,
       }
     )
-    // console.log(
-    //   "GET_USER_ENROLLED_COURSES_API API RESPONSE............",
-    //   response
-    // )
+    console.log(
+      " After in operation profile API GET_USER_ENROLLED_COURSES_API API RESPONSE............",
+      response
+    )
 
     if (!response.data.success) {
       throw new Error(response.data.message)
@@ -71,10 +77,11 @@ export async function getInstructorData(token) {
   const toastId = toast.loading("Loading...")
   let result = []
   try {
+    console.log("before in operation profile API GET_INSTRUCTOR_DATA_API API RESPONSE............")
     const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, {
       Authorization: `Bearer ${token}`,
     })
-    console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response)
+    console.log("After in operation profile API GET_INSTRUCTOR_DATA_API API RESPONSE............", response)
     result = response?.data?.courses
   } catch (error) {
     console.log("GET_INSTRUCTOR_DATA_API API ERROR............", error)
@@ -83,3 +90,8 @@ export async function getInstructorData(token) {
   toast.dismiss(toastId)
   return result
 }
+
+// eslint-disable-next-line no-unused-expressions
+// module.exports=getUserEnrolledCourses;
+// we can alse do module.exports = { all fun names};
+// if we have used default keyword like export default function funName {}  we should import it by name not by destructuring

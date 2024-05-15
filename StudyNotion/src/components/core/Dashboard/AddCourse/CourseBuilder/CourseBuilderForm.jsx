@@ -36,7 +36,8 @@ export default function CourseBuilderForm() {
     // console.log(data)
     setLoading(true)
 
-    let result
+    let result;
+    console.log("course in course builder ",course);
 
     if (editSectionName) {
       result = await updateSection(
@@ -98,6 +99,8 @@ export default function CourseBuilderForm() {
     dispatch(setStep(1))
     dispatch(setEditCourse(true))
   }
+  console.log("in course builder ",course.courseContent);
+  
 
   return (
     <div className="space-y-8 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-6">
@@ -116,7 +119,7 @@ export default function CourseBuilderForm() {
           />
           {errors.sectionName && (
             <span className="ml-2 text-xs tracking-wide text-pink-200">
-              Section name is required
+              Section name is Required           
             </span>
           )}
         </div>
@@ -140,6 +143,7 @@ export default function CourseBuilderForm() {
           )}
         </div>
       </form>
+      {/* console.log("in course builder ",course.courseContent.length); */}
       {course.courseContent.length > 0 && (
         <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}

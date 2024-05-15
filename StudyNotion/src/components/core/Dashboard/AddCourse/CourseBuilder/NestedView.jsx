@@ -15,6 +15,7 @@ import ConfirmationModal from "../../../../Common/ConfirmationModal"
 import SubSectionModal from "./SubSectionModal"
 
 export default function NestedView({ handleChangeEditSectionName }) {
+
   const { course } = useSelector((state) => state.course)
   const { token } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
@@ -70,7 +71,7 @@ export default function NestedView({ handleChangeEditSectionName }) {
               <div className="flex items-center gap-x-3">
                 <button
                   onClick={() =>
-                    handleChangeEditSectionName(
+                    handleChangeEditSectionName( //section is basically passed in map  
                       section._id,
                       section.sectionName
                     )

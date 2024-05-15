@@ -8,6 +8,7 @@ import InstructorChart from "./InstructorDashboard/InstructorChart"
 
 export default function Instructor() {
   const { token } = useSelector((state) => state.auth)
+  // console.log("token is ",token);
   const { user } = useSelector((state) => state.profile)
   const [loading, setLoading] = useState(false)
   const [instructorData, setInstructorData] = useState(null)
@@ -16,8 +17,16 @@ export default function Instructor() {
   useEffect(() => {
     ;(async () => {
       setLoading(true)
+      console.log("before instructorApiData getInstructorData in instructor component    ....");
       const instructorApiData = await getInstructorData(token)
+      console.log("after instructorApiData getInstructorData in instructor component    ....");
+
+
+      console.log("before fetchInstructorCourses in instructor component    ....");
+
       const result = await fetchInstructorCourses(token)
+
+      console.log("after fetchInstructorCourses in instructor component    ....");
       console.log(instructorApiData)
       if (instructorApiData.length) setInstructorData(instructorApiData)
       if (result) {

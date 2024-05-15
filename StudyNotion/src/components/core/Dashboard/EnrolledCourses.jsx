@@ -4,8 +4,8 @@ import { BiDotsVerticalRounded } from "react-icons/bi"
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-import { getUserEnrolledCourses } from "../../../ services/operations/profileAPI"
-
+import { getUserEnrolledCourses } from "../../../services/operations/profileAPI"
+ 
 export default function EnrolledCourses() {
   const { token } = useSelector((state) => state.auth)
   const navigate = useNavigate()
